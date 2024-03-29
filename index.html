@@ -1,447 +1,418 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>COSMOS</title>
-  <style>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COSMOS</title>
+    <style>
 
-    .overlay {
-      display: none; /* Initially hidden */
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.2); /* Semi-transparent black */
-      z-index: 1000; /* Ensure it's on top of everything */
-      
-    }
+      .overlay {
+        display: none; 
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.2); 
+        z-index: 1000; 
+       }
 
-    /* Styles for the welcome box */
-    .welcome-box {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background-color: rgba(0, 0, 0); /* Semi-transparent white */
-      color:white;
-      padding: 40px; /* Increased padding */
-      border-radius: 30px; /* Increased border radius */
-      border-width: 20;
-      border-color:rgb(0, 255,255);
-      text-align: center; 
-      width: 90%; /* Increased width */
-      max-width: 800px; /* Set maximum width */
-      height:50%;
-      max-height: 300px;
-    }
+     .welcome-box {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: rgba(0, 0, 0); 
+        color:white;
+        padding: 40px; 
+        border-radius: 30px; 
+        border-width: 20;
+        border-color:rgb(0, 255,255);
+        text-align: center; 
+        width: 90%; 
+        max-width: 800px; 
+        height:50%;
+        max-height: 300px;
+      }
 
-    /* Styles for the close button */
-    .close-btn {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      cursor: pointer;
-    }
+      .close-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        cursor: pointer;
+      }
 
-    @font-face {
-      font-family: 'game font 7';
-      src: url('game_font_7.ttf'); 
-    }
+      @font-face {
+        font-family: 'game font 7';
+        src: url('game_font_7.ttf'); 
+      }
 
-    @font-face {
-      font-family: 'square space';
-      src: url('square space.ttf'); 
-    }
+      @font-face {
+        font-family: 'square space';
+        src: url('square space.ttf'); 
+      }
 
-    @font-face {
-      font-family: 'a little sunshine';
-      src: url('A little sunshine.ttf'); 
-    }
+      @font-face {
+        font-family: 'a little sunshine';
+        src: url('A little sunshine.ttf'); 
+      }
 
-    body {
-      margin: 0;
-      padding: 0;
-      overflow-y: auto; 
-      background-image: url('galaxy.jpg'); 
-      background-size: cover;
-      background-position: center;
-      background-attachment: fixed; 
-      color: white; 
-      /*border: 8px solid rgb(0, 255,255); */
-    }
+      body {
+        margin: 0;
+        padding: 0;
+        overflow-y: auto; 
+        background-image: url('galaxy.jpg'); 
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed; 
+        color: white; 
+        /*border: 8px solid rgb(0, 255,255); */
+      }
 
-    .container {
-      display: grid;
-      grid-template-columns: 1fr 6fr; /* Two columns, left one takes 1/4th of the space */
-      grid-gap: 0px; /* Gap between columns */
-    }
+      .container {
+        display: grid;
+        grid-template-columns: 1fr 6fr; /* Two columns, left one takes 1/4th of the space */
+        grid-gap: 0px; /* Gap between columns */
+      }
 
-    .left-column {
-      background-color: rgba(0, 0, 0); /* Adjust the background color as needed */
-      padding: 0px;
-      color: white;
-      border-right: 1px solid white;
-    }
+      .left-column {
+        background-color: rgba(0, 0, 0); /* Adjust the background color as needed */
+        padding: 0px;
+        color: white;
+        border-right: 1px solid white;
+      }
 
-    .right-column {
-      padding-top: 20px;
-      color: white;
-    }
+      .right-column {
+        padding-top: 20px;
+        color: white;
+      }
 
-    header {
-      text-align: left;
-      padding: 0px 0px;
-      background-color: rgba(0, 0, 0, 0.5); 
-    }
+      header {
+        text-align: left;
+        padding: 0px 0px;
+        background-color: rgba(0, 0, 0, 0.5); 
+      }
 
-    #cosmos {
-      font-size: 7rem;
-      color: rgb(0, 255,255); 
-      animation: neon 1.5s ease-in-out infinite alternate;
-      margin: 0; 
-      font-family: 'game font 7', sans-serif;
-    }
+      #cosmos {
+        font-size: 7rem;
+        color: rgb(0, 255,255); 
+        animation: neon 1.5s ease-in-out infinite alternate;
+        margin: 0; 
+        font-family: 'game font 7', sans-serif;
+      }
 
-    #cosmos-typed {
-      font-size: 7rem;
-      color: rgb(0, 255,255); 
-      margin: 0; 
-      padding-left: 20px;
-      font-family: 'game font 7', sans-serif;
-      white-space: nowrap; /* Prevent text from wrapping */
-      overflow: hidden; /* Hide overflow characters */
-      border-right: 2px solid white; /* Create blinking cursor effect */
-      animation: typing 3s steps(20,end), blink-caret 0.5s, neon 1.5s ease-in-out infinite alternate;
-      
-    }
+      #cosmos-typed {
+        font-size: 7rem;
+        color: rgb(0, 255,255); 
+        margin: 0; 
+        padding-left: 20px;
+        font-family: 'game font 7', sans-serif;
+        white-space: nowrap; /* Prevent text from wrapping */
+        overflow: hidden; /* Hide overflow characters */
+        border-right: 2px solid white; /* Create blinking cursor effect */
+        animation: typing 3s steps(20,end), blink-caret 0.5s, neon 1.5s ease-in-out infinite alternate;
+      }
 
-    #space{
-      font-size: 7rem;
-      color: rgb(0, 255,255); 
-      margin: 0; 
-      font-family: 'game font 7', sans-serif;
-      padding-bottom: 0;
-      padding-left: 80px;
-    }
+      #space{
+        font-size: 7rem;
+        color: rgb(0, 255,255); 
+        margin: 0; 
+        font-family: 'game font 7', sans-serif;
+        padding-bottom: 0;
+        padding-left: 80px;
+      }
 
-    #subheading {
-      font-size: 2rem;
-      color: #ffffff; 
-      animation: white 1.5s ease-in-out infinite alternate;
-      padding-left: 50px; 
-      margin: 0;
-      font-family: 'square space', sans-serif;
-    }
+      #subheading {
+        font-size: 2rem;
+        color: #ffffff; 
+        animation: white 1.5s ease-in-out infinite alternate;
+        padding-left: 50px; 
+        margin: 0;
+        font-family: 'square space', sans-serif;
+      }
 
-    #subheading-typed {
-      font-size: 2rem;
-      color: #ffffff; 
-      padding-left: 50px; 
-      margin: 0; 
-      font-family: 'square space', sans-serif;
-      white-space: nowrap; 
-      overflow: hidden; 
-      border-right: 2px solid white; 
-      animation: typing1 3s steps(20,end), blink-caret 0.5s,white 1.5s ease-in-out infinite alternate;
-      
-    }
+      #subheading-typed {
+        font-size: 2rem;
+        color: #ffffff; 
+        padding-left: 50px; 
+        margin: 0; 
+        font-family: 'square space', sans-serif;
+        white-space: nowrap; 
+        overflow: hidden; 
+        border-right: 2px solid white; 
+        animation: typing1 3s steps(20,end), blink-caret 0.5s,white 1.5s ease-in-out infinite alternate;
+      }
 
+      p{
+        font-family: 'times new roman', sans-serif;  
+        margin-left: 90px;
+        margin-right: 90px;
+        margin-bottom: 20px;
+        font-size: 20px; 
+        text-align: justify;
+      }
 
-    p{
-      font-family: 'times new roman', sans-serif;  
-      margin-left: 90px;
-      margin-right: 90px;
-      margin-bottom: 20px;
-      font-size: 20px; 
-      text-align: justify;
-    }
+      #p1{
+        font-family: 'a little sunshine', sans-serif;  
+        color:aqua;
+        margin-left: 90px;
+        margin-right: 90px;
+        margin-bottom: 20px;
+        font-size: 40px; 
+        text-align: center;
+      }
 
-    #p1{
-      font-family: 'a little sunshine', sans-serif;  
-      color:aqua;
-      margin-left: 90px;
-      margin-right: 90px;
-      margin-bottom: 20px;
-      font-size: 40px; 
-      text-align: center;
-    }
-
-    #p2{
-      font-family: 'square space', sans-serif;  
-      color:aqua;
-      margin-left: 90px;
-      margin-right: 90px;
-      margin-bottom: 20px;
-      font-size: 30px; 
-      text-align: center;
-    }
+      #p2{
+        font-family: 'square space', sans-serif;  
+        color:aqua;
+        margin-left: 90px;
+        margin-right: 90px;
+        margin-bottom: 20px;
+        font-size: 30px; 
+        text-align: center;
+      }
     
-    hr {
-      border: none;
-      border-top: 2px solid rgb(0, 255,255); 
-      margin: 10px 0; 
-    }
-
-    @keyframes typing {
-      from { width: 0 }
-      to { width: 32% }
-    }
-
-    @keyframes typing1 {
-      from { width: 0 }
-      to { width: 20% }
-    }
-
-    @keyframes neon {
-      from {
-        text-shadow: 0 0 10px rgb(0, 255,255), 0 0 20px rgb(0, 255,255), 0 0 30px rgb(0, 255,255);
+      hr {
+        border: none;
+        border-top: 2px solid rgb(0, 255,255); 
+        margin: 10px 0; 
       }
-      to {
-        text-shadow: 0 0 20px rgb(0, 255,255), 0 0 30px rgb(0, 255,255), 0 0 40px rgb(0, 255,255);
+
+      @keyframes typing {
+        from { width: 0 }
+        to { width: 32% }
       }
-    }
 
-    @keyframes white {
-      from {
-        text-shadow: 0 0 10px #ffffff, 0 0 20px #ffffff, 0 0 30px #ffffff;
+      @keyframes typing1 {
+        from { width: 0 }
+        to { width: 20% }
       }
-      to {
-        text-shadow: 0 0 20px #ffffff, 0 0 30px #ffffff, 0 0 40px #ffffff;
+
+      @keyframes neon {
+        from {
+          text-shadow: 0 0 10px rgb(0, 255,255), 0 0 20px rgb(0, 255,255), 0 0 30px rgb(0, 255,255);
+        }
+        to {
+          text-shadow: 0 0 20px rgb(0, 255,255), 0 0 30px rgb(0, 255,255), 0 0 40px rgb(0, 255,255);
+        }
       }
-    }
 
-    @keyframes blink-caret {
-      from, to { border-color: transparent }
-      50% { border-color: white }
-    }
+      @keyframes white {
+        from {
+          text-shadow: 0 0 10px #ffffff, 0 0 20px #ffffff, 0 0 30px #ffffff;
+        }
+        to {
+          text-shadow: 0 0 20px #ffffff, 0 0 30px #ffffff, 0 0 40px #ffffff;
+        }
+      }
 
-    canvas {
-      display: block;
-      margin: 0px auto; 
-      margin-top: -100px;
-    }
+      @keyframes blink-caret {
+        from, to { border-color: transparent }
+        50% { border-color: white }
+      }
 
-    footer {
-      background-color: rgba(0, 0, 0);
-      color: white;
-      padding: -10px;
-      text-align: center;
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-    }
+      canvas {
+        display: block;
+        margin: 0px auto; 
+        margin-top: -100px;
+      }
 
-    /* CSS for Mobile Responsiveness */
-@media only screen and (max-width: 768px) {
-    /* Adjust header */
-    header {
-        padding: 10px 20px; /* Add padding */
-    }
+      footer {
+        background-color: rgba(0, 0, 0);
+        color: white;
+        padding: -10px;
+        text-align: center;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+      }
 
-    /* Adjust h1 */
-    #cosmos-typed {
-        font-size: 3rem; /* Decrease font size */
-    }
+      @media only screen and (max-width: 768px) {
 
-    /* Adjust paragraph margins */
-    p {
-        margin-left: 10px;
-        margin-right: 10px;
-    }
+        header {
+          padding: 10px 20px; 
+        }
 
-    /* Adjust canvas margin */
-    canvas {
-        margin-top: 10px;
-    }
+        #cosmos-typed {
+          font-size: 3rem; 
+        }
 
-    /* Adjust welcome box */
-    .welcome-box {
-        width: 100%; /* Make it 100% width */
-        padding: 20px; /* Increase padding */
-        max-height: calc(100vh - 120px); /* Set maximum height */
-        overflow-y: auto; /* Add scroll if content exceeds height */
-        margin: 0 auto; /* Center horizontally */
-    }
-    .left-column {
-        padding: 5px; 
-    }
+        p {
+          margin-left: 10px;
+          margin-right: 10px;
+        }
 
-    /* Adjust right column */
-    .right-column {
-        padding: 20px; /* Add padding */
-    }
+        canvas {
+          margin-top: 10px;
+        }
 
-    /* Adjust footer */
-    footer {
-        padding: 10px; /* Add padding */
-    }
-}
+        .welcome-box {
+          width: 100%;
+          padding: 20px; 
+          max-height: calc(100vh - 120px); 
+          overflow-y: auto; 
+          margin: 0 auto; 
+        }
+    
+        .left-column {
+          padding: 5px; 
+        }
 
+        .right-column {
+          padding: 20px;
+        }
 
-
-
-  </style>
-</head>
-<body>
-
-<!-- Overlay -->
-  <div class="overlay" id="overlay">
-    <!-- Welcome box -->
-    <div class="welcome-box">
-      <br><hr>
-      <h1 id="subheading">Welcome to the Cosmos Virtual Classroom!!</h1>
-        <h1 id="p1"> Here you can enhance your understanding of the cosmos alongside our esteemed guide,<br>
-        "Cosmos Copilot Saurabh Gupta Sir"</h1><hr>
-      <button class="close-btn" onclick="closeOverlay()">X</button>
-    </div>
-  </div>
-
-<div class="container">
-    <div class="left-column">
-      <h1 id="space"> S </h1>
-      <h1 id="space"> T </h1>
-      <h1 id="space"> A </h1>
-      <h1 id="space"> R </h1>
-      <h1 id="space"> F </h1>
-      <h1 id="space"> I </h1>
-      <h1 id="space"> E </h1>
-      <h1 id="space"> L </h1>
-      <h1 id="space"> D </h1>
-      <h1 id="space"> S </h1>
+        footer {
+          padding: 10px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Overlay -->
+    <div class="overlay" id="overlay">
+      <div class="welcome-box">
+        <br><hr>
+        <h1 id="subheading">Welcome to the Cosmos Virtual Classroom!!</h1>
+          <h1 id="p1"> Here you can enhance your understanding of the cosmos alongside our esteemed guide,<br>
+          "Cosmos Copilot Saurabh Gupta Sir"</h1><hr>
+        <button class="close-btn" onclick="closeOverlay()">X</button>
+      </div>
     </div>
 
-    <div class="right-column">
-  <header>
-    <h1 id="cosmos-typed">COSMOS</h1>
-    <hr><hr>
-  </header>
-  <p>Embark on a captivating cosmic voyage with us as we navigate through the boundless wonders of the universe. From the distant reaches of
-     shimmering galaxies captivating mysteries of black holes, our journey unveil the mesmerizing beauty and profound intricacies of the cosmos. 
-     Welcome to an adventure of exploration and awe-inspiration that awaits us among the stars!</p>
+    <div class="container">
+      <div class="left-column">
+        <h1 id="space"> S </h1>
+        <h1 id="space"> T </h1>
+        <h1 id="space"> A </h1>
+        <h1 id="space"> R </h1>
+        <h1 id="space"> F </h1>
+        <h1 id="space"> I </h1>
+        <h1 id="space"> E </h1>
+        <h1 id="space"> L </h1>
+        <h1 id="space"> D </h1>
+        <h1 id="space"> S </h1>
+      </div>
+      <div class="right-column">
+        <header>
+          <h1 id="cosmos-typed">COSMOS</h1>
+          <hr><hr>
+        </header>
+        <p>Embark on a captivating cosmic voyage with us as we navigate through the boundless wonders of the universe. From the distant reaches of
+         shimmering galaxies captivating mysteries of black holes, our journey unveil the mesmerizing beauty and profound intricacies of the cosmos. 
+         Welcome to an adventure of exploration and awe-inspiration that awaits us among the stars!</p>
 
-  <h2 id="subheading-typed"> What is Cosmos ?</h2> 
+        <h2 id="subheading-typed"> What is Cosmos ?</h2> 
   
-  <p>The cosmos, often referred to as the universe, encompasses everything that exists – from the smallest subatomic particles to the vast 
-    expanse of space itself. It includes galaxies, stars, planets, nebulae, black holes, and more. Cosmos is a term that reflects the grandeur
-    and scale of the universe, inviting us to contemplate our place within it.</p>
+        <p>The cosmos, often referred to as the universe, encompasses everything that exists – from the smallest subatomic particles to the vast 
+        expanse of space itself. It includes galaxies, stars, planets, nebulae, black holes, and more. Cosmos is a term that reflects the grandeur
+        and scale of the universe, inviting us to contemplate our place within it.</p>
 
-  <h2 id="subheading-typed"> Planetary motion :</h2>
+        <h2 id="subheading-typed"> Planetary motion :</h2>
   
-  <p>Planetary motion, the graceful ballet of celestial bodies navigating the cosmic stage,
-     is a captivating spectacle that has fascinated astronomers for centuries.At the 
-     heart of this intricate dance lies the gravitational embrace between planets and
-     their parent stars, a force that governs their orbits and shapes their trajectories
-     through space. From the innermost planets, tracing swift arcs around their brilliant
-     sun, to outer giants, meandering in stately ellipses across the vast expanse of solar
-     system. As we gaze upon the celestial sphere, we are reminded of the interconnectedness of all things,
-      and the enduring mystery of our place in the cosmos.</p>
-  
+        <p>Planetary motion, the graceful ballet of celestial bodies navigating the cosmic stage,
+        is a captivating spectacle that has fascinated astronomers for centuries.At the 
+        heart of this intricate dance lies the gravitational embrace between planets and
+        their parent stars, a force that governs their orbits and shapes their trajectories
+        through space. From the innermost planets, tracing swift arcs around their brilliant
+        sun, to outer giants, meandering in stately ellipses across the vast expanse of solar
+        system. As we gaze upon the celestial sphere, we are reminded of the interconnectedness of all things,
+        and the enduring mystery of our place in the cosmos.</p>
 
-  <canvas id="canvas" width="800" height="800"></canvas> 
+        <canvas id="canvas" width="800" height="800"></canvas> 
 
-  <script>
-    const canvas = document.getElementById('canvas');
-    const ctx = canvas.getContext('2d');
+        <script>
+          const canvas = document.getElementById('canvas');
+          const ctx = canvas.getContext('2d');
 
-    const planets = [
-      { name: 'Mercury', color: 'gray', radius: 3, orbitRadius: 60, speed: 0.005 },
-      { name: 'Venus', color: 'orange', radius: 5, orbitRadius: 100, speed: 0.003 },
-      { name: 'Earth', color: 'blue', radius: 6, orbitRadius: 140, speed: 0.002 },
-      { name: 'Mars', color: 'red', radius: 4, orbitRadius: 180, speed: 0.0015 },
-      { name: 'Jupiter', color: 'brown', radius: 15, orbitRadius: 240, speed: 0.0005 },
-      { name: 'Saturn', color: 'goldenrod', radius: 12, orbitRadius: 300, speed: 0.0003 },
-      { name: 'Uranus', color: 'lightblue', radius: 8, orbitRadius: 360, speed: 0.0002 },
-      { name: 'Neptune', color: 'darkblue', radius: 8, orbitRadius: 400, speed: 0.00015 }
-    ];
+          const planets = [
+            { name: 'Mercury', color: 'gray', radius: 3, orbitRadius: 60, speed: 0.005 },
+            { name: 'Venus', color: 'orange', radius: 5, orbitRadius: 100, speed: 0.003 },
+            { name: 'Earth', color: 'blue', radius: 6, orbitRadius: 140, speed: 0.002 },
+            { name: 'Mars', color: 'red', radius: 4, orbitRadius: 180, speed: 0.0015 },
+            { name: 'Jupiter', color: 'brown', radius: 15, orbitRadius: 240, speed: 0.0005 },
+            { name: 'Saturn', color: 'goldenrod', radius: 12, orbitRadius: 300, speed: 0.0003 },
+            { name: 'Uranus', color: 'lightblue', radius: 8, orbitRadius: 360, speed: 0.0002 },
+            { name: 'Neptune', color: 'darkblue', radius: 8, orbitRadius: 400, speed: 0.00015 }
+          ];
 
-    function draw() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+          function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Draw Sun
-      ctx.fillStyle = 'yellow';
-      ctx.beginPath();
-      ctx.arc(canvas.width / 2, canvas.height / 2, 20, 0, Math.PI * 2);
-      ctx.fill();
+            // Draw Sun
+            ctx.fillStyle = 'yellow';
+            ctx.beginPath();
+            ctx.arc(canvas.width / 2, canvas.height / 2, 20, 0, Math.PI * 2);
+            ctx.fill();
 
-      // Draw planets
-      planets.forEach(planet => {
-        ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)'; // White with transparency for orbits
-        ctx.beginPath();
-        ctx.ellipse(canvas.width / 2, canvas.height / 2, planet.orbitRadius, planet.orbitRadius * 0.7, 0, 0, Math.PI * 2);
-        ctx.stroke();
+            // Draw planets
+            planets.forEach(planet => {
+              ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)'; 
+              ctx.beginPath();
+              ctx.ellipse(canvas.width / 2, canvas.height / 2, planet.orbitRadius, planet.orbitRadius * 0.7, 0, 0, Math.PI * 2);
+              ctx.stroke();
 
-        ctx.fillStyle = planet.color;
+              ctx.fillStyle = planet.color;
 
-        const angle = Date.now() * planet.speed; // Use time to calculate position
+              const angle = Date.now() * planet.speed; // Use time to calculate position
 
-        const x = canvas.width / 2 + planet.orbitRadius * Math.cos(angle);
-        const y = canvas.height / 2 + planet.orbitRadius * 0.7 * Math.sin(angle); // Make the orbit elliptical
+              const x = canvas.width / 2 + planet.orbitRadius * Math.cos(angle);
+              const y = canvas.height / 2 + planet.orbitRadius * 0.7 * Math.sin(angle); // Make the orbit elliptical
 
-        ctx.beginPath();
-        ctx.arc(x, y, planet.radius, 0, Math.PI * 2);
-        ctx.fill();
+              ctx.beginPath();  
+              ctx.arc(x, y, planet.radius, 0, Math.PI * 2);
+              ctx.fill();
 
-        // Write planet name
-        ctx.fillStyle = 'white';
-        ctx.textAlign = 'center';
-        ctx.fillText(planet.name, x, y - planet.radius - 5); // Adjust position for the name
+              // Write planet name
+              ctx.fillStyle = 'white';
+              ctx.textAlign = 'center';
+              ctx.fillText(planet.name, x, y - planet.radius - 5); // Adjust position for the name
 
-        // Add rings for Saturn
-        if (planet.name === 'Saturn') {
-                        ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)'; // White with transparency for rings
-                        ctx.lineWidth = 1;
-                        ctx.beginPath();
-                        ctx.ellipse(x, y, 20, 10, Math.PI / 3, 0, Math.PI * 2);
-                        ctx.stroke();
-                    }
-      });
+              // Add rings for Saturn
+              if (planet.name === 'Saturn') {
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)'; 
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.ellipse(x, y, 20, 10, Math.PI / 3, 0, Math.PI * 2);
+                ctx.stroke();
+              }
+            });      
+          requestAnimationFrame(draw);
+          }
+          draw();
+          const cosmosText = "COSMOS";
+          let cosmosTyped = "";
+          let cosmosTypedIndex = 0;
+          const cosmosTypedElement = document.getElementById('cosmos-typed');
 
-      
-      requestAnimationFrame(draw);
-    }
-
-    draw();
-
-    const cosmosText = "COSMOS";
-    let cosmosTyped = "";
-    let cosmosTypedIndex = 0;
-    const cosmosTypedElement = document.getElementById('cosmos-typed');
-
-    function typeCosmos() {
-      if (cosmosTypedIndex < cosmosText.length) {
-        cosmosTyped += cosmosText.charAt(cosmosTypedIndex);
-        cosmosTypedIndex++;
-        cosmosTypedElement.innerHTML = cosmosTyped;
-        setTimeout(typeCosmos, 150); // Adjust typing speed here (milliseconds)
+          function typeCosmos() {
+            if (cosmosTypedIndex < cosmosText.length) {
+              cosmosTyped += cosmosText.charAt(cosmosTypedIndex);
+              cosmosTypedIndex++;
+              cosmosTypedElement.innerHTML = cosmosTyped;
+              setTimeout(typeCosmos, 150); 
+            }
+          }
+          typeCosmos();
+        </script>
+      </div>
+    </div>
+    <script src="https://cdn.botpress.cloud/webchat/v1/inject.js"></script>
+    <script src="https://mediafiles.botpress.cloud/356c651d-9386-4df8-afff-1b32aebc99fa/webchat/config.js" defer></script>
+    <script>
+      // Function to display the overlay
+      function displayOverlay() {
+        document.getElementById('overlay').style.display = 'block';
       }
-    }
-
-    typeCosmos();
-  </script>
-  </div>
-</div>
-
-  <script src="https://cdn.botpress.cloud/webchat/v1/inject.js"></script>
-  <script src="https://mediafiles.botpress.cloud/356c651d-9386-4df8-afff-1b32aebc99fa/webchat/config.js" defer></script>
-
-  <script>
-    // Function to display the overlay
-    function displayOverlay() {
-      document.getElementById('overlay').style.display = 'block';
-    }
-
-    // Function to close the overlay
-    function closeOverlay() {
-      document.getElementById('overlay').style.display = 'none';
-    }
-
-    // Call displayOverlay function when the page loads
-    window.onload = displayOverlay;
-  </script>
+      // Function to close the overlay
+      function closeOverlay() {
+        document.getElementById('overlay').style.display = 'none';
+      }
+      // Call displayOverlay function when the page loads
+      window.onload = displayOverlay;
+    </script>
     <footer>
-        <p>The ChatBot Copilot by Saurabh Sir is here for you! Ask anything you wish to know about the COSMOS!!</p>
+      <p>The ChatBot Copilot by Saurabh Sir is here for you! Ask anything you wish to know about the COSMOS!!</p>
     </footer>
-</body>
+  </body>
 </html>
